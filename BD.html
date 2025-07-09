@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Jacob</title> 
+
+  <script
+    src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
+    type="module"
+  ></script>
+
+  <style>
+    body {
+      background: black;
+      background-size: cover;
+      font-family: 'Lato', sans-serif;
+      margin: 0;
+      padding: 40px 20px;
+      color: white;
+    }
+
+    h1 {
+      font-size: 4rem;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .jacob-gradient {
+      background: linear-gradient(270deg, #833AB4, #1DB6FD, #FCF645, #F77539);
+      background-size: 600% 600%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 5s ease infinite;
+      display: inline-block;
+      padding: 0 10px;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 80%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    #message-box {
+      font-size: 1.5rem;
+      text-align: center;
+      margin-top: 30px;
+      height: 40px;
+    }
+
+    .lottie-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 400px;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .lottie-container.fade-out {
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+    }
+
+    .message-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 100px;
+    }
+
+    .message-box {
+      padding: 30px;
+      width: 100%;
+      max-width: 500px;
+      font-size: 1rem;
+      font-family: 'Arial', serif;
+      color: white;
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    .box-header {
+      font-size: 3.5rem;
+      margin-bottom: 0px;
+      text-align: left;
+    }
+
+    .box-subheader {
+      font-size: 1.2rem;
+      color: #E3D3A3;
+      margin-bottom: 10px;
+      text-align: left;
+    }
+
+    .photo-container {
+      margin-top: 80px;
+      text-align: center;
+    }
+
+    /* glowing circular photo for main message */
+    .glow-photo {
+      width: 100%;
+      max-width: 250px;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 
+        0 0 15px #E3D3A3,
+        0 0 30px #E3D3A3,
+        0 0 45px #E3D3A3;
+      display: block;
+      margin: 0 auto; 
+    }
+
+/*these are things that are for the third page*/
+
+    .title-box-sec {
+      font-size: 3.5rem;
+      font-family: 'lato', sans-serif;
+      color: #E3D3A3;
+      text-align: center;
+      margin-bottom: 0px;
+      margin-top: 200px;
+      color: white;
+    }
+
+    .card-photo {
+      width: 30%;
+      aspect-ratio: 1 / 1;
+      border-radius: 0px;
+      margin-bottom: 10px;
+      box-shadow: none;
+      display: center;
+    }
+
+    .three-box-section {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin-top: -40px;
+    }
+
+    .message-card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 250px;
+      height: 300px;
+      text-align: center;
+      margin: 5px;
+      margin-top: 100px;
+      color: white;
+      box-shadow:
+        0 0 10px #E3D3A3,
+        0 0 15px #E3D3A3,
+        0 0 15px #E3D3A3;
+      transition: transform 0.3s ease;
+      font-weight: normal;
+      font-style: 'Lato', sans-serif;
+    }
+
+    .message-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-title {
+      margin-top: 15px;
+      font-size: 1.4rem;
+      color: #E3D3A3;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      #message-box {
+        font-size: 1.2rem;
+      }
+
+      .box-header {
+        font-size: 1.5rem;
+      }
+
+      .box-subheader {
+        font-size: 1rem;
+      }
+
+      .message-box {
+        padding: 20px;
+        font-size: 0.95rem;
+      }
+
+      .glow-photo {
+        max-width: 200px;
+      }
+
+      .message-section {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .photo-container {
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Happy Birthday <span class="jacob-gradient">&lt; Jacob &gt;</span>!</h1>
+
+  <div id="message-box"></div>
+
+  <script>
+    const messages = [
+      "I learned how to code.",
+      "Following your footsteps.",
+      "Happy 21st Birthday.",
+      "I love you!"
+    ];
+
+    const box = document.getElementById("message-box");
+
+    async function typeMessages() {
+      while (true) {
+        for (const message of messages) {
+          for (let i = 0; i <= message.length; i++) {
+            box.textContent = message.slice(0, i);
+            await new Promise(r => setTimeout(r, 50));
+          }
+          await new Promise(r => setTimeout(r, 1500));
+          for (let i = message.length; i >= 0; i--) {
+            box.textContent = message.slice(0, i);
+            await new Promise(r => setTimeout(r, 20));
+          }
+        }
+      }
+    }
+
+    typeMessages();
+  </script>
+
+  <div class="lottie-container">
+    <dotlottie-player
+      src="https://lottie.host/082b3f93-8c18-4e71-b74f-708f575ffd5c/Gser2ZwKET.lottie"
+      background="transparent"
+      speed="1"
+      style="width: 80px; height: 80px"
+      loop
+      autoplay
+    ></dotlottie-player>
+  </div>
+
+  <!--for the main messages at the beginning-->
+  <div class="message-section">
+    <div class="message-box">
+      <h2 class="box-header">Surprise</h2>
+      <h3 class="box-subheader">Yours Always, Ji</h3>
+      <p>
+        Welcome to your digital birthday card & happy GOLDEN birthday! I can't believe that you're finally 21.
+        It's crazy to think that I've known you since you were 17, and that I'm now 
+        spending your birthday with you for the fourth time. I hope you have an amazing 
+        day filled with so much love and happiness, you truly deserve it.
+      </p>
+      <p>
+        I hope you like the website-ish that I made for you! I know it's not as good as what you
+        can do, but it was nice to channel my inner you. It took me way too long to create this.
+        A lot of Google-ing and ChatGPT-ing was done, and I definitely have a new respect for people who can code. 
+        Thank you for always pushing me to try new things, I love you!
+      </p>
+    </div>
+
+    <div class="photo-container">
+      <img src="jj bend.png" alt="A special memory" class="glow-photo" />
+    </div>
+  </div>
+
+  <script>
+    const lottieContainer = document.querySelector('.lottie-container');
+
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      if (scrollY > 100) {
+        lottieContainer.classList.add('fade-out');
+      } else {
+        lottieContainer.classList.remove('fade-out');
+      }
+    });
+  </script>
+
+  <!--  the 3 message cards  -->
+
+  <div class="title-box-sec"><b>Things You Can Do<b></div>
+  
+  <div class="three-box-section">
+    <div class="message-card">
+      <img src="bottle icon.png" alt="Memory 1" class="card-photo" />
+      <p>You can finally drink everywhere and make music festivals a little extra fun! Some countries you can now drink at are
+      the United States, Sri Lanka, Cameroon, and Kazakhstan. You can even visit Disney's Epcot to do the drink around-the-world trend. #International
+      </p>
+    </div>
+
+    <div class="message-card">
+      <img src="car icon.png" alt="Memory 2" class="card-photo" />
+      <p>You can now rent a car! Or even better.. you can be an uber driver. Now we can go on road trips around the world (or to Franks).
+      We can explore Scotland, or maybe even go around the Japanese Alps. Skiing, matcha, hot springs..
+      </p>
+    </div>
+
+    <div class="message-card">
+      <img src="ring icon.png" alt="Memory 3" class="card-photo" />
+      <p>We can legally get married and adopt a baby! We can be a couple under government status woo! The second part is definitely under seriously heavy consideration though. I can't wait
+      to grow old with you and spend the rest of our lives together mwuah!</p>
+    </div>
+  </div>
+
+<!-- slideshow part-->
+
+<div class="title-slides"><b>A Few Memories<b></div>
+
+<div class="slideshow-wrapper">
+  <div class="slideshow-inner">
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+
+    <div class="slideshow-content">
+      <div class="mySlides fade">
+        <img src="nyc.jpeg" alt="NYC">
+      </div>
+      <div class="mySlides fade">
+        <img src="camp.JPG" alt="Camp">
+      </div>
+      <div class="mySlides fade">
+        <img src="sint.jpeg" alt="Sint">
+      </div>
+      <div class="mySlides fade">
+        <img src="lolla.jpg" alt="Lolla">
+      </div>
+      <div class="dot-container">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+      </div>
+    </div>
+
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+  </div>
+</div>
+
+<!-- styling the slideshow -->
+<style>
+
+.title-slides {
+      font-size: 3.5rem;
+      font-family: 'lato', sans-serif;
+      text-align: center;
+      margin-bottom: 0px;
+      margin-top: 240px;
+      color: white;
+      color for "Memories": #E3D3A3
+}
+
+.slideshow-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+  margin-bottom: 100px;
+}
+
+.slideshow-inner {
+  position: relative;
+  width: 400px;
+}
+
+.slideshow-content {
+  text-align: center;
+}
+
+.mySlides {
+  display: none;
+}
+
+.mySlides img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 
+    0 0 10px #E3D3A3,
+    0 0 20px #E3D3A3,
+    0 0 25px #E3D3A3;
+}
+
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 24px;
+  padding: 0px 0px;
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+  z-index: 1;
+}
+
+.prev {
+  left: -50px;
+}
+
+.next {
+  right: -50px;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+.dot-container {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.dot {
+  cursor: pointer;
+  height: 10px;
+  width: 10px;
+  margin: 0 4px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+</style>
+
+<!-- script for the slides -->
+<script>
+let slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+}
+</script>
+
+</body>
+</html>
+
